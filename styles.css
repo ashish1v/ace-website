@@ -256,10 +256,16 @@ p { margin: 0 0 1em; }
 .contact-list a { text-decoration: none; font-weight: 500; color: var(--navy); overflow-wrap: anywhere; }
 .contact-list a:hover { color: var(--gold-deep); }
 
+.btn-linkedin { margin-top: 2.2rem; background: var(--navy); color: #fff; }
+.btn-linkedin:hover { background: #0a66c2; }
+.btn-linkedin svg, .social svg { width: 18px; height: 18px; fill: currentColor; }
+
 /* Footer */
 .site-footer { background: #071431; color: rgba(255,255,255,.7); padding: 80px 0 0; font-size: .93rem; }
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.3fr; gap: 2.5rem; padding-bottom: 3rem; }
 .footer-brand img { width: 84px; margin-bottom: 1rem; }
+.social { display: inline-grid; place-items: center; width: 40px; height: 40px; margin-top: 1.2rem; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); color: #fff; transition: background .2s ease, border-color .2s ease; }
+.site-footer .social:hover { background: #0a66c2; border-color: #0a66c2; color: #fff; }
 .footer-name { font-family: var(--serif); font-size: 1.6rem; color: #fff; margin-bottom: .6rem; }
 .site-footer h4 { color: var(--gold-2); font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 1.1rem; }
 .site-footer nav a, .footer-grid > div > a { display: block; text-decoration: none; margin-bottom: .6rem; word-break: break-word; }
