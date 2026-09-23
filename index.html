@@ -35,6 +35,10 @@
     "email": "annant.sharma@aceconsultinggroup.in",
     "telephone": "+91-9557701111",
     "areaServed": "Worldwide",
+    "address": [
+      { "@type": "PostalAddress", "addressLocality": "New Delhi", "addressCountry": "IN" },
+      { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" }
+    ],
     "sameAs": ["https://www.linkedin.com/company/ace-consulting-group-acg/"],
     "founder": { "@type": "Person", "name": "Annant Sharma", "jobTitle": "Founder & CEO" }
   }
@@ -322,12 +326,9 @@
     <section id="leadership" class="section section-green">
       <div class="container leader">
         <div class="leader-card reveal">
-          <div class="leader-monogram" aria-hidden="true">AS</div>
-          <div>
-            <p class="eyebrow light">Leadership</p>
-            <h2>Annant Sharma</h2>
-            <p class="leader-role">Founder &amp; CEO</p>
-          </div>
+          <p class="eyebrow light">Leadership</p>
+          <h2>Annant Sharma</h2>
+          <p class="leader-role">Founder &amp; CEO</p>
         </div>
         <div class="leader-copy reveal">
           <blockquote>&ldquo;India's relationships with the world are being rewritten across diplomacy, trade, technology and culture. ACE exists to help the people writing them connect, move and exchange with purpose.&rdquo;</blockquote>
@@ -338,6 +339,18 @@
           </div>
         </div>
       </div>
+      <div class="container leader leader-advisor">
+        <div class="leader-card reveal">
+          <p class="eyebrow light">Advisory</p>
+        </div>
+        <div class="advisor reveal">
+          <div>
+            <h3>Ashish Verma</h3>
+            <p class="leader-role">Independent Advisor &middot; London Office</p>
+          </div>
+          <a href="mailto:ashish@aceconsultinggroup.in" class="btn btn-outline-light btn-sm">ashish@aceconsultinggroup.in</a>
+        </div>
+      </div>
     </section>
 
     <!-- CONTACT -->
@@ -346,20 +359,26 @@
         <p class="eyebrow">Contact</p>
         <h2 class="reveal">Let's start a conversation.</h2>
         <p class="reveal">Whether it's a dialogue to convene, a partnership to build or a market to enter, reach out directly. Every enquiry is handled promptly and in confidence.</p>
-        <ul class="contact-list">
-          <li class="reveal">
-            <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>
-            <div><small>Phone</small><a href="tel:+919557701111">+91 95577 01111</a></div>
-          </li>
-          <li class="reveal">
-            <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
-            <div><small>Email</small><a href="mailto:annant.sharma@aceconsultinggroup.in">annant.sharma@<wbr>aceconsultinggroup.in</a></div>
-          </li>
-          <li class="reveal">
-            <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
-            <div><small>Web</small><a href="https://aceconsultinggroup.in">aceconsultinggroup.in</a></div>
-          </li>
-        </ul>
+        <div class="offices">
+          <article class="office reveal">
+            <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+            <p class="office-country">India</p>
+            <h3>New Delhi</h3>
+            <ul class="office-lines">
+              <li><span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><a href="tel:+919557701111">+91 95577 01111</a></li>
+              <li><span aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><a href="mailto:annant.sharma@aceconsultinggroup.in">annant.sharma@<wbr>aceconsultinggroup.in</a></li>
+            </ul>
+          </article>
+          <article class="office reveal">
+            <span class="ci" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+            <p class="office-country">United Kingdom</p>
+            <h3>London</h3>
+            <ul class="office-lines">
+              <li class="office-person">Ashish Verma, Independent Advisor</li>
+              <li><span aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><a href="mailto:ashish@aceconsultinggroup.in">ashish@<wbr>aceconsultinggroup.in</a></li>
+            </ul>
+          </article>
+        </div>
         <a class="btn btn-linkedin reveal" href="https://www.linkedin.com/company/ace-consulting-group-acg/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="5" r="2.1"/><rect x="3" y="9" width="4.2" height="12" rx=".4"/><path d="M10 9h3.9v1.7h.1c.5-1 1.9-2.1 3.9-2.1 4.1 0 4.6 2.7 4.6 6.1V21h-4.1v-5.6c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3V21H10z"/></svg>Follow ACE on LinkedIn</a>
       </div>
     </section>
@@ -370,6 +389,7 @@
       <div class="footer-brand">
         <img src="/assets/emblem.webp" alt="" width="84" height="56">
         <p class="footer-name">ACE Consulting Group</p>
+        <p class="footer-offices">New Delhi &middot; London</p>
         <p class="tagline small"><span>Connect</span><i class="dot dot-gold"></i><span>Move</span><i class="dot dot-green"></i><span>Exchange</span></p>
         <a class="social" href="https://www.linkedin.com/company/ace-consulting-group-acg/" target="_blank" rel="noopener" aria-label="ACE Consulting Group on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="5" r="2.1"/><rect x="3" y="9" width="4.2" height="12" rx=".4"/><path d="M10 9h3.9v1.7h.1c.5-1 1.9-2.1 3.9-2.1 4.1 0 4.6 2.7 4.6 6.1V21h-4.1v-5.6c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3V21H10z"/></svg></a>
       </div>
@@ -393,6 +413,7 @@
         <h4>Get in touch</h4>
         <a href="tel:+919557701111">+91 95577 01111</a>
         <a href="mailto:annant.sharma@aceconsultinggroup.in">annant.sharma@aceconsultinggroup.in</a>
+        <a href="mailto:ashish@aceconsultinggroup.in">ashish@aceconsultinggroup.in</a>
         <a href="https://www.linkedin.com/company/ace-consulting-group-acg/" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </div>
