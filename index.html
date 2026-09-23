@@ -69,31 +69,42 @@
   <main id="main">
     <!-- HERO -->
     <section class="hero">
-      <div class="hero-dots" aria-hidden="true"></div>
-      <div class="container hero-grid">
+      <canvas class="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-fade" aria-hidden="true"></div>
+      <div class="container hero-inner">
         <div class="hero-copy">
           <p class="eyebrow reveal">Strategy &bull; Diplomacy &bull; Geopolitics</p>
-          <h1 class="reveal">Where India <em>meets</em> the world.</h1>
+          <h1 class="reveal" aria-label="Where India meets the world.">
+            <span aria-hidden="true">Where India meets</span>
+            <span class="rotator" aria-hidden="true">
+              <span class="is-on" data-group="world">the world.</span>
+              <span data-group="uk">the UK.</span>
+              <span data-group="europe">Europe.</span>
+              <span data-group="gulf">the Gulf.</span>
+              <span data-group="asean">ASEAN.</span>
+              <span data-group="indo">the Indo-Pacific.</span>
+            </span>
+          </h1>
           <p class="lead reveal">ACE Consulting Group helps organisations, institutions and public bodies navigate the intersection of international relations, economic diplomacy and market strategy, turning global ambition into partnerships that last.</p>
           <div class="hero-cta reveal">
             <a class="btn btn-gold" href="#contact">Start a Conversation</a>
             <a class="btn btn-outline" href="#pillars">Explore Our Practice</a>
           </div>
-          <p class="tagline reveal" aria-label="Connect, Move, Exchange">
-            <span>Connect</span><i class="dot dot-gold"></i><span>Move</span><i class="dot dot-green"></i><span>Exchange</span>
-          </p>
-        </div>
-        <div class="hero-art reveal">
-          <div class="orbit orbit-1" aria-hidden="true"></div>
-          <div class="orbit orbit-2" aria-hidden="true"></div>
-          <img src="/assets/emblem.webp" alt="ACE Consulting Group emblem: a golden globe with India highlighted and a rising arrow" width="640" height="436">
         </div>
       </div>
-      <div class="container hero-strip">
-        <div><strong>5</strong><span>Integrated practice pillars</span></div>
-        <div><strong>G2G &middot; G2B &middot; B2B</strong><span>Partnership channels</span></div>
-        <div><strong>Track 1.5 &amp; 2</strong><span>Diplomatic dialogue</span></div>
-        <div><strong>India &harr; World</strong><span>Two-way market access</span></div>
+      <div class="hero-bar">
+        <div class="container hero-bar-inner">
+          <div class="clocks">
+            <p class="clock"><span class="clock-dot dot-green"></span><span class="clock-city">New Delhi</span><time data-tz="Asia/Kolkata"></time></p>
+            <p class="clock"><span class="clock-dot dot-gold"></span><span class="clock-city">London</span><time data-tz="Europe/London"></time></p>
+          </div>
+          <div class="marquee" role="note" aria-label="Focus areas: Indo-Pacific, UK-India, Europe-India, Middle East, ASEAN, trade corridors, supply chains, sustainability, emerging technologies">
+            <div class="marquee-track" aria-hidden="true">
+              <span>Connect</span><i></i><span>Move</span><i></i><span>Exchange</span><i></i><span>Indo-Pacific</span><i></i><span>UK&ndash;India</span><i></i><span>Europe&ndash;India</span><i></i><span>Middle East</span><i></i><span>ASEAN</span><i></i><span>Trade corridors</span><i></i><span>Supply chains</span><i></i><span>Sustainability</span><i></i><span>Emerging technologies</span><i></i>
+              <span>Connect</span><i></i><span>Move</span><i></i><span>Exchange</span><i></i><span>Indo-Pacific</span><i></i><span>UK&ndash;India</span><i></i><span>Europe&ndash;India</span><i></i><span>Middle East</span><i></i><span>ASEAN</span><i></i><span>Trade corridors</span><i></i><span>Supply chains</span><i></i><span>Sustainability</span><i></i><span>Emerging technologies</span><i></i>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -420,5 +431,6 @@
   </footer>
 
   <script src="/main.js" defer></script>
+  <script src="/hero.js" defer></script>
 </body>
 </html>
