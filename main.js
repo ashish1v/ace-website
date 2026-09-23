@@ -1,12 +1,7 @@
 (function () {
   var root = document.documentElement;
   root.classList.add('js');
-
-  // Header background on scroll
-  var header = document.querySelector('.site-header');
-  function onScroll() { header.classList.toggle('scrolled', window.scrollY > 20); }
-  onScroll();
-  window.addEventListener('scroll', onScroll, { passive: true });
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Mobile menu
   var toggle = document.querySelector('.nav-toggle');
@@ -20,49 +15,83 @@
   menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
 
-  // Pillar tabs
-  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
-  function selectTab(tab, focus) {
-    tabs.forEach(function (t) {
-      var on = t === tab;
-      t.setAttribute('aria-selected', String(on));
-      t.tabIndex = on ? 0 : -1;
-      var panel = document.getElementById(t.getAttribute('aria-controls'));
-      panel.hidden = !on;
-      panel.classList.toggle('is-active', on);
+  // Pillars accordion (one panel open at a time)
+  var items = Array.prototype.slice.call(document.querySelectorAll('.acc-item'));
+  function openItem(item) {
+    items.forEach(function (it) {
+      var on = it === item;
+      it.classList.toggle('is-open', on);
+      it.querySelector('.acc-head').setAttribute('aria-expanded', String(on));
     });
-    if (focus) tab.focus();
-    tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }
-  tabs.forEach(function (tab, i) {
-    tab.addEventListener('click', function () { selectTab(tab); });
-    tab.addEventListener('keydown', function (e) {
-      var next = null;
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
-      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
-      if (e.key === 'Home') next = tabs[0];
-      if (e.key === 'End') next = tabs[tabs.length - 1];
-      if (next) { e.preventDefault(); selectTab(next, true); }
-    });
+  items.forEach(function (item) {
+    item.querySelector('.acc-head').addEventListener('click', function () { openItem(item); });
   });
-  document.querySelectorAll('[data-open-tab]').forEach(function (link) {
+  document.querySelectorAll('[data-open-pillar]').forEach(function (link) {
     link.addEventListener('click', function () {
-      var tab = document.getElementById('tab-' + link.getAttribute('data-open-tab'));
-      if (tab) selectTab(tab);
+      var item = items[Number(link.getAttribute('data-open-pillar')) - 1];
+      if (item) openItem(item);
     });
   });
 
+  // Statement: split into words that light up as it scrolls through the viewport
+  var statement = document.querySelector('[data-words]');
+  var words = [];
+  if (statement && !reduce) {
+    statement.innerHTML = statement.textContent.trim().split(/\s+/).map(function (w) {
+      return '<span class="w">' + w + '</span>';
+    }).join(' ');
+    words = Array.prototype.slice.call(statement.querySelectorAll('.w'));
+  }
+
+  // Scroll-linked effects: header, progress bar, statement words, process line
+  var header = document.querySelector('.site-header');
+  var bar = document.querySelector('.progress span');
+  var process = document.querySelector('[data-progress]');
+  var steps = process ? Array.prototype.slice.call(process.children) : [];
+  var ticking = false;
+  function clamp(v) { return Math.max(0, Math.min(1, v)); }
+  function update() {
+    ticking = false;
+    var y = window.scrollY, vh = window.innerHeight;
+    header.classList.toggle('scrolled', y > 20);
+    if (bar) bar.style.setProperty('--sp', clamp(y / (document.documentElement.scrollHeight - vh)));
+    if (words.length) {
+      var r = statement.getBoundingClientRect();
+      var p = clamp((vh * 0.85 - r.top) / (r.height + vh * 0.35));
+      var lit = Math.round(p * words.length);
+      words.forEach(function (w, i) { w.classList.toggle('lit', i < lit); });
+    }
+    if (process) {
+      var pr = process.getBoundingClientRect();
+      var pp = reduce ? 1 : clamp((vh * 0.75 - pr.top) / (pr.height * 0.9));
+      process.style.setProperty('--p', pp);
+      steps.forEach(function (li, i) { li.classList.toggle('done', pp >= (i / Math.max(1, steps.length - 1)) - 0.02); });
+    }
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
   // Reveal on scroll
-  var items = document.querySelectorAll('.reveal');
+  var reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) { entry.target.classList.add('in'); io.unobserve(entry.target); }
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        el.classList.add('in'); io.unobserve(el);
+        setTimeout(function () { el.style.transitionDelay = ''; }, 1400); // keep hover effects snappy
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
-    items.forEach(function (el) { io.observe(el); });
+    reveals.forEach(function (el, i) {
+      // stagger siblings that reveal together
+      var sib = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
+      el.style.transitionDelay = Math.min(sib, 5) * 70 + 'ms';
+      io.observe(el);
+    });
   } else {
-    items.forEach(function (el) { el.classList.add('in'); });
+    reveals.forEach(function (el) { el.classList.add('in'); });
   }
 
   // Active nav link
