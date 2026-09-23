@@ -90,10 +90,8 @@ p { margin: 0 0 1em; }
 .site-header.scrolled { background: rgba(252,251,248,.85); backdrop-filter: saturate(160%) blur(14px); box-shadow: 0 1px 0 var(--line); }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .brand { display: flex; align-items: center; gap: .7rem; text-decoration: none; color: var(--ink); }
-.brand img { width: 50px; height: auto; }
-.brand-text { display: flex; flex-direction: column; line-height: 1; }
-.brand-name { font-family: var(--display); font-weight: 700; font-size: 1.35rem; letter-spacing: .08em; color: var(--navy); }
-.brand-sub { font-size: .6rem; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); margin-top: .3rem; }
+.brand img:first-child { width: 50px; height: auto; }
+.brand-wordmark { width: auto; height: 48px; }
 .nav-menu { display: flex; align-items: center; gap: 2rem; }
 .nav-menu a:not(.btn) { color: var(--ink-2); text-decoration: none; font-size: .92rem; font-weight: 500; position: relative; }
 .nav-menu a:not(.btn)::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -6px; height: 2px; border-radius: 2px; background: var(--green); transition: right .25s ease; }
@@ -260,7 +258,7 @@ p { margin: 0 0 1em; }
 .site-footer .social { display: inline-grid; margin-bottom: 0; }
 .site-footer .social:hover { background: #0a66c2; border-color: #0a66c2; color: #fff; }
 .footer-offices { font-size: .78rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: .8rem; }
-.footer-name { font-family: var(--display); font-size: 1.35rem; font-weight: 600; color: var(--ink); letter-spacing: -.02em; margin-bottom: .5rem; }
+.footer-brand .footer-wordmark { width: 190px; height: auto; margin-bottom: 1rem; }
 .site-footer h4 { color: var(--ink); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 1.1rem; }
 .site-footer nav a, .footer-grid > div > a { display: block; text-decoration: none; margin-bottom: .6rem; word-break: break-word; }
 .site-footer a:hover { color: var(--navy); }
