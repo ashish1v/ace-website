@@ -1,5 +1,5 @@
-// Corridor explorer: flat dotted map (Europe to Australia) that draws the
-// selected corridor's routes from New Delhi.
+// Corridor explorer: flat dotted map that draws the selected corridor's routes
+// from New Delhi, panning west to take in the Americas when needed.
 (function () {
   var canvas = document.querySelector('.corridor-map');
   var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-corridor]'));
@@ -7,12 +7,21 @@
   var ctx = canvas.getContext('2d');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var VIEW = { lon0: -14, lon1: 160, lat0: 64, lat1: -44 };  // visible window
+  // Map windows (same 1.6 aspect as the canvas): Europe-to-Australia, and Americas-to-India
+  var WINDOWS = {
+    east: { lon0: -14, lon1: 160, lat0: 64, lat1: -44 },
+    west: { lon0: -128, lon1: 92, lat0: 66, lat1: -71.5 }
+  };
+  var WEST = { us: 1, canada: 1, latam: 1 };
+  var VIEW = { lon0: -14, lon1: 160, lat0: 64, lat1: -44 }, settled = true;
   var ORIGIN = { lon: 77.2, lat: 28.6 };
   var ROUTES = {
     indo: [['Tokyo', 139.7, 35.7], ['Sydney', 151.2, -33.9], ['Singapore', 103.8, 1.35]],
     uk: [['London', -0.13, 51.5]],
     europe: [['Brussels', 4.35, 50.85], ['Paris', 2.35, 48.86], ['Berlin', 13.4, 52.5]],
+    us: [['Washington DC', -77.04, 38.9], ['San Francisco', -122.4, 37.8]],
+    canada: [['Ottawa', -75.7, 45.4], ['Vancouver', -123.1, 49.3]],
+    latam: [['Bras\u00edlia', -47.9, -15.8], ['Mexico City', -99.1, 19.4], ['Buenos Aires', -58.4, -34.6], ['Santiago', -70.7, -33.45, 'left']],
     gulf: [['Dubai', 55.27, 25.2], ['Riyadh', 46.7, 24.7], ['Doha', 51.53, 25.29]],
     asean: [['Singapore', 103.8, 1.35], ['Jakarta', 106.8, -6.2], ['Bangkok', 100.5, 13.75], ['Hanoi', 105.8, 21.03]]
   };
@@ -27,10 +36,15 @@
     var r = canvas.getBoundingClientRect();
     W = r.width; H = r.height; dpr = Math.min(window.devicePixelRatio || 1, 2);
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-    dotsLayer = document.createElement('canvas');
+    renderDots();
+  }
+
+  function renderDots() {
+    dotsLayer = dotsLayer || document.createElement('canvas');
     dotsLayer.width = canvas.width; dotsLayer.height = canvas.height;
     var g = dotsLayer.getContext('2d');
-    g.scale(dpr, dpr);
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.clearRect(0, 0, W, H);
     var india = {}; map.india.forEach(function (i) { india[i] = 1; });
     var uk = {}; map.uk.forEach(function (i) { uk[i] = 1; });
     var cell = W / ((VIEW.lon1 - VIEW.lon0) / map.step), rad = Math.max(1, cell * 0.24);
@@ -48,7 +62,8 @@
     var a = px(ORIGIN.lon, ORIGIN.lat), b = px(lon, lat);
     var dx = b[0] - a[0], dy = b[1] - a[1], d = Math.sqrt(dx * dx + dy * dy);
     var nx = -dy / d, ny = dx / d; if (ny > 0) { nx = -nx; ny = -ny; }
-    var c = [(a[0] + b[0]) / 2 + nx * d * 0.3, (a[1] + b[1]) / 2 + ny * d * 0.3], pts = [];
+    var bend = Math.min(d * 0.3, H * 0.16); // keep long transatlantic arcs inside the map
+    var c = [(a[0] + b[0]) / 2 + nx * bend, (a[1] + b[1]) / 2 + ny * bend], pts = [];
     for (var i = 0; i <= 50; i++) {
       var t = i / 50, u = 1 - t;
       pts.push([u * u * a[0] + 2 * u * t * c[0] + t * t * b[0], u * u * a[1] + 2 * u * t * c[1] + t * t * b[1]]);
@@ -58,12 +73,14 @@
 
   function frame(now) {
     raf = 0;
+    if (!settled) pan();
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(dotsLayer, 0, 0);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     var t = reduce ? 1e9 : now - started;
 
+    var labels = [];
     ROUTES[active].forEach(function (r, k) {
       var pts = curve(r[1], r[2]);
       var p = Math.min(1, Math.max(0, (t - k * 180) / 1200)); p = 1 - Math.pow(1 - p, 3);
@@ -86,21 +103,23 @@
         ctx.beginPath(); ctx.arc(e[0], e[1], 4 + ripple * 14, 0, 6.2832); ctx.stroke();
         ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(e[0], e[1], 4.5, 0, 6.2832); ctx.fill();
         ctx.fillStyle = 'rgb(' + GOLD + ')'; ctx.beginPath(); ctx.arc(e[0], e[1], 3, 0, 6.2832); ctx.fill();
-        pill(e, r[0], false);
+        labels.push([e, r[0], r[3] === 'left']);
       }
     });
+    labels.forEach(function (l) { pill(l[0], l[1], false, l[2]); }); // labels sit above every route
     var o = px(ORIGIN.lon, ORIGIN.lat), k2 = reduce ? 0.5 : (now % 2400) / 2400;
     ctx.fillStyle = 'rgba(' + GREEN + ',' + (1 - k2) * 0.25 + ')'; ctx.beginPath(); ctx.arc(o[0], o[1], 7 + k2 * 20, 0, 6.2832); ctx.fill();
     ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(o[0], o[1], 6.5, 0, 6.2832); ctx.fill();
     ctx.fillStyle = 'rgb(' + GREEN + ')'; ctx.beginPath(); ctx.arc(o[0], o[1], 4.5, 0, 6.2832); ctx.fill();
     pill(o, 'New Delhi', true);
-    if (!reduce && visible) raf = requestAnimationFrame(frame);
+    if ((!reduce && visible) || !settled) raf = requestAnimationFrame(frame);
   }
 
-  function pill(p, text, primary) {
+  function pill(p, text, primary, left) {
     ctx.font = '600 11.5px Inter, system-ui, sans-serif';
     var w = ctx.measureText(text).width + 16, h = 22, x = p[0] + 9, y = p[1] - h - 7;
-    if (x + w > W - 6) x = p[0] - w - 9;
+    if (left || x + w > W - 6) x = p[0] - w - 9;
+    if (x < 6) x = p[0] + 9;
     if (y < 6) y = p[1] + 9;
     ctx.save();
     ctx.shadowColor = 'rgba(29,41,64,.12)'; ctx.shadowBlur = 8; ctx.shadowOffsetY = 2;
@@ -112,11 +131,23 @@
     ctx.fillText(text, x + 8, y + h / 2 + 0.5);
   }
 
+  function pan() {
+    var T = WINDOWS[WEST[active] ? 'west' : 'east'], done = true;
+    Object.keys(T).forEach(function (k) {
+      var d = T[k] - VIEW[k];
+      if (reduce || Math.abs(d) < 0.05) VIEW[k] = T[k]; else { VIEW[k] += d * 0.12; done = false; }
+    });
+    settled = done;
+    renderDots();
+  }
+
   function kick() { if (!raf && map && (visible || reduce)) raf = requestAnimationFrame(frame); }
   function select(key, fromUser) {
     if (fromUser) userPicked = true;
     if (key === active && started) return;
+    var wasWest = !!WEST[active];
     active = key; started = performance.now();
+    if (wasWest !== !!WEST[key]) { settled = false; started += reduce ? 0 : 450; }
     buttons.forEach(function (b) {
       var on = b.getAttribute('data-corridor') === key;
       b.classList.toggle('is-active', on); b.setAttribute('aria-pressed', String(on));

@@ -20,17 +20,29 @@
     { name: 'Jakarta', lon: 106.8, lat: -6.2, group: 'asean' },
     { name: 'Bangkok', lon: 100.5, lat: 13.75, group: 'asean' },
     { name: 'Tokyo', lon: 139.7, lat: 35.7, group: 'indo' },
-    { name: 'Sydney', lon: 151.2, lat: -33.9, group: 'indo' }
+    { name: 'Sydney', lon: 151.2, lat: -33.9, group: 'indo' },
+    { name: 'Washington DC', lon: -77.04, lat: 38.9, group: 'us' },
+    { name: 'San Francisco', lon: -122.4, lat: 37.8, group: 'us' },
+    { name: 'Ottawa', lon: -75.7, lat: 45.4, group: 'canada' },
+    { name: 'Vancouver', lon: -123.1, lat: 49.3, group: 'canada' },
+    { name: 'Brasília', lon: -47.9, lat: -15.8, group: 'latam' },
+    { name: 'Mexico City', lon: -99.1, lat: 19.4, group: 'latam' },
+    { name: 'Buenos Aires', lon: -58.4, lat: -34.6, group: 'latam' },
+    { name: 'Santiago', lon: -70.7, lat: -33.45, group: 'latam' }
   ];
   // Where the globe turns for each headline word: [centre longitude, centre latitude]
-  var VIEWS = { world: [62, 18], uk: [36, 34], europe: [42, 34], gulf: [64, 22], asean: [92, 10], indo: [112, 4] };
+  var VIEWS = { world: [62, 18], uk: [36, 34], europe: [42, 34], gulf: [64, 22], asean: [92, 10], indo: [112, 4],
+    us: [-2, 42], canada: [-8, 48], latam: [-12, 2] };
   var CARDS = {
     world: ['Corridors', 'India ↔ World', 'Connect · Move · Exchange'],
     uk: ['Corridor', 'UK–India', 'Trade · Education · Diaspora'],
     europe: ['Corridor', 'Europe–India', 'Technology · Climate · Trade'],
     gulf: ['Corridor', 'Middle East', 'Energy · Investment · Connectivity'],
     asean: ['Corridor', 'ASEAN', 'Supply chains · Trade · Culture'],
-    indo: ['Corridor', 'Indo-Pacific', 'Maritime cooperation · Connectivity']
+    indo: ['Corridor', 'Indo-Pacific', 'Maritime cooperation · Connectivity'],
+    us: ['Corridor', 'US–India', 'Technology · Innovation · Investment'],
+    canada: ['Corridor', 'Canada–India', 'Education · Clean energy · Trade'],
+    latam: ['Corridor', 'Latin America–India', 'Energy · Agriculture · Critical minerals']
   };
   var GREEN = '47,122,90', GOLD = '185,156,98', NAVY = '38,64,107';
 
@@ -143,7 +155,7 @@
   // great-circle arc from New Delhi, lifted off the surface
   function arcPoints(c) {
     var A = O, B = c.v, d = Math.acos(Math.max(-1, Math.min(1, A[0] * B[0] + A[1] * B[1] + A[2] * B[2])));
-    var lift = 0.06 + d * 0.16, pts = [], s = Math.sin(d);
+    var lift = 0.06 + Math.min(d, 1.5) * 0.14, pts = [], s = Math.sin(d);
     for (var i = 0; i <= 60; i++) {
       var t = i / 60, w1 = Math.sin((1 - t) * d) / s, w2 = Math.sin(t * d) / s, h = 1 + lift * Math.sin(Math.PI * t);
       pts.push([(A[0] * w1 + B[0] * w2) * h, (A[1] * w1 + B[1] * w2) * h, (A[2] * w1 + B[2] * w2) * h]);
