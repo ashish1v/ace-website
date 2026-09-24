@@ -1,5 +1,5 @@
 // Hero: interactive dotted globe. Rotates to each corridor in sync with the
-// rotating headline, draws great-circle arcs from New Delhi, and can be dragged.
+// rotating headline, draws great-circle arcs from India, and can be dragged.
 (function () {
   var hero = document.querySelector('.hero');
   var canvas = document.querySelector('.globe');
@@ -8,7 +8,7 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var RAD = Math.PI / 180;
 
-  var ORIGIN = { name: 'New Delhi', lon: 77.2, lat: 28.6 };
+  var ORIGIN = { name: 'India', lon: 77.2, lat: 28.6 };
   var CITIES = [
     { name: 'London', lon: -0.13, lat: 51.5, group: 'uk' },
     { name: 'Brussels', lon: 4.35, lat: 50.85, group: 'europe' },
@@ -152,7 +152,7 @@
     ctx.fill();
   }
 
-  // great-circle arc from New Delhi, lifted off the surface
+  // great-circle arc from India, lifted off the surface
   function arcPoints(c) {
     var A = O, B = c.v, d = Math.acos(Math.max(-1, Math.min(1, A[0] * B[0] + A[1] * B[1] + A[2] * B[2])));
     var lift = 0.06 + Math.min(d, 1.5) * 0.14, pts = [], s = Math.sin(d);
@@ -221,7 +221,7 @@
     ctx.fillStyle = 'rgba(' + GREEN + ',' + (1 - k) * 0.28 + ')'; ctx.beginPath(); ctx.arc(X, Y, 7 + k * 22, 0, 6.2832); ctx.fill();
     ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(X, Y, 6.5, 0, 6.2832); ctx.fill();
     ctx.fillStyle = 'rgb(' + GREEN + ')'; ctx.beginPath(); ctx.arc(X, Y, 4.5, 0, 6.2832); ctx.fill();
-    tag([X, Y], 'New Delhi', true, 1);
+    tag([X, Y], 'India', true, 1);
   }
 
   function tag(p, text, primary, alpha) {

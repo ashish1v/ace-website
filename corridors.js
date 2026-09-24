@@ -1,5 +1,5 @@
 // Corridor explorer: flat dotted map that draws the selected corridor's routes
-// from New Delhi, panning west to take in the Americas when needed.
+// from India, panning west to take in the Americas when needed.
 (function () {
   var canvas = document.querySelector('.corridor-map');
   var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-corridor]'));
@@ -111,7 +111,7 @@
     ctx.fillStyle = 'rgba(' + GREEN + ',' + (1 - k2) * 0.25 + ')'; ctx.beginPath(); ctx.arc(o[0], o[1], 7 + k2 * 20, 0, 6.2832); ctx.fill();
     ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(o[0], o[1], 6.5, 0, 6.2832); ctx.fill();
     ctx.fillStyle = 'rgb(' + GREEN + ')'; ctx.beginPath(); ctx.arc(o[0], o[1], 4.5, 0, 6.2832); ctx.fill();
-    pill(o, 'New Delhi', true);
+    pill(o, 'India', true);
     if ((!reduce && visible) || !settled) raf = requestAnimationFrame(frame);
   }
 
