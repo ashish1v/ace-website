@@ -242,6 +242,17 @@
   function kick() { if (!raf && visible) raf = requestAnimationFrame(frame); }
 
   // ---------- headline + corridor card ----------
+  // The HTML holds only "the world." so search engines read a clean headline;
+  // the other rotating words are added here, hidden from screen readers.
+  var rotator = document.querySelector('.rotator');
+  if (rotator && rotator.getAttribute('data-more') && !reduce) {
+    JSON.parse(rotator.getAttribute('data-more')).forEach(function (w) {
+      var span = document.createElement('span');
+      span.setAttribute('data-group', w[0]); span.setAttribute('aria-hidden', 'true');
+      span.textContent = w[1];
+      rotator.appendChild(span);
+    });
+  }
   var words = Array.prototype.slice.call(document.querySelectorAll('.rotator [data-group]'));
   var card = document.querySelector('.globe-card');
   var idx = 0;

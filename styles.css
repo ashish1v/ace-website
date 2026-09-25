@@ -246,7 +246,7 @@ p { margin: 0 0 1em; }
 .process li { position: relative; }
 .step { position: relative; z-index: 1; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: #fff; border: 1px solid var(--line); color: var(--muted); font: 600 .85rem var(--display); margin-bottom: 1.2rem; transition: background .4s ease, color .4s ease, border-color .4s ease, transform .4s ease; }
 .process li.done .step { background: var(--navy); color: #fff; border-color: var(--navy); transform: scale(1.06); }
-.process h4 { font-size: 1.3rem; }
+.process h3 { font-size: 1.3rem; }
 .process p { color: var(--muted); font-size: .96rem; margin: 0; }
 
 /* Corridors: explorer */
@@ -277,9 +277,26 @@ p { margin: 0 0 1em; }
 .b-icon { width: 50px; height: 50px; border-radius: 16px; display: grid; place-items: center; background: var(--blue-50); margin-bottom: auto; }
 .b-blue .b-icon, .b-sage .b-icon { background: #fff; }
 .b-icon svg { width: 24px; height: 24px; fill: none; stroke: var(--navy); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.bento h4 { font-size: 1.2rem; margin: 2rem 0 .4rem; }
-.bento .b-wide h4 { font-size: 1.6rem; }
+.bento h3 { font-size: 1.2rem; margin: 2rem 0 .4rem; }
+.bento .b-wide h3 { font-size: 1.6rem; }
 .bento p { color: var(--muted); font-size: .95rem; margin: 0; max-width: 42ch; }
+
+/* FAQ */
+.faq { display: grid; grid-template-columns: .8fr 1.2fr; gap: 4rem; align-items: start; }
+.faq-head { position: sticky; top: calc(var(--header-h) + 32px); }
+.faq-list { display: grid; gap: .8rem; }
+.faq-item { background: #fff; border: 1px solid var(--line); border-radius: 20px; transition: box-shadow .3s ease, border-color .3s ease; }
+.faq-item[open] { box-shadow: var(--shadow); border-color: var(--blue-100); }
+.faq-item summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.3rem 1.6rem; cursor: pointer; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary h3 { font-size: 1.12rem; margin: 0; line-height: 1.4; }
+.faq-icon { position: relative; flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--blue-50); transition: background .3s ease, transform .4s ease; }
+.faq-icon::before, .faq-icon::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 2px; margin: -1px 0 0 -6px; border-radius: 2px; background: var(--navy); transition: transform .3s ease; }
+.faq-icon::after { transform: rotate(90deg); }
+.faq-item[open] .faq-icon { background: var(--navy); transform: rotate(180deg); }
+.faq-item[open] .faq-icon::before, .faq-item[open] .faq-icon::after { background: #fff; }
+.faq-item[open] .faq-icon::after { transform: rotate(0); }
+.faq-item p { margin: 0; padding: 0 1.6rem 1.5rem; color: var(--muted); max-width: 660px; }
 
 /* Leadership */
 .people { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
@@ -374,7 +391,8 @@ p { margin: 0 0 1em; }
   .hero-bar-inner { flex-direction: column; align-items: stretch; gap: .2rem; padding: .8rem 0; }
   .marquee { border-left: 0; padding: .6rem 0 0; }
 
-  .section-head.split, .about-cols, .explorer, .people, .contact-panel { grid-template-columns: 1fr; gap: 2rem; }
+  .section-head.split, .about-cols, .explorer, .people, .contact-panel, .faq { grid-template-columns: 1fr; gap: 2rem; }
+  .faq-head { position: static; }
   .value { grid-template-columns: 56px 1fr 52px; gap: .4rem 1rem; padding: 1.6rem .4rem; }
   .value p { grid-column: 2 / 3; }
   .value-icon { grid-row: 1 / 3; grid-column: 3; width: 48px; height: 48px; }
