@@ -156,12 +156,7 @@ p { margin: 0 0 1em; }
 
 .hero-bar { position: relative; border-top: 1px solid var(--line); background: rgba(252,251,248,.8); backdrop-filter: blur(8px); }
 .hero-bar-inner { display: flex; align-items: center; gap: 2rem; min-height: 64px; }
-.clocks { display: flex; gap: 1.6rem; flex: none; }
-.clock { display: flex; align-items: center; gap: .5rem; margin: 0; font-size: .85rem; color: var(--muted); white-space: nowrap; }
-.clock-dot { width: 7px; height: 7px; border-radius: 50%; }
-.clock-city { font-weight: 600; color: var(--ink); }
-.clock time { font-variant-numeric: tabular-nums; }
-.marquee { position: relative; flex: 1; overflow: hidden; border-left: 1px solid var(--line); padding-left: 2rem;
+.marquee { position: relative; flex: 1; overflow: hidden; 
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
 .marquee-track { display: flex; align-items: center; gap: 1.2rem; width: max-content; animation: marquee 48s linear infinite; }
 .marquee:hover .marquee-track { animation-play-state: paused; }
@@ -318,7 +313,6 @@ p { margin: 0 0 1em; }
 .office > span { display: block; }
 .office-top { display: flex !important; justify-content: space-between; align-items: center; gap: 1rem; }
 .office-country { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
-.office-top time { font: 600 .82rem var(--sans); color: var(--green); font-variant-numeric: tabular-nums; background: var(--sage-50); padding: .2rem .6rem; border-radius: 999px; }
 .office-city { font: 600 1.9rem/1.2 var(--display); letter-spacing: -.03em; color: var(--ink); margin: .4rem 0 .2rem; }
 .office-person { color: var(--muted); font-size: .95rem; }
 .office-mail { margin-top: .9rem; color: var(--navy); font-weight: 600; font-size: .95rem; overflow-wrap: anywhere; }
@@ -406,7 +400,6 @@ p { margin: 0 0 1em; }
   .globe-card { padding: .7rem 1rem; }
   .gc-title { font-size: 1.1rem; }
   .gc-tags { font-size: .78rem; }
-  .clocks { justify-content: space-between; }
   .tagline { letter-spacing: .18em; gap: .55rem; font-size: .68rem; }
   .footer-grid { grid-template-columns: 1fr; }
   .bento { grid-template-columns: 1fr; }

@@ -281,18 +281,6 @@
   canvas.addEventListener('pointerup', end);
   canvas.addEventListener('pointercancel', end);
 
-  // ---------- office clocks ----------
-  function clocks() {
-    document.querySelectorAll('[data-tz]').forEach(function (el) {
-      var tz = el.getAttribute('data-tz'), d = new Date();
-      var time = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: tz }).format(d);
-      var zone = tz === 'Asia/Kolkata' ? 'IST' : ((new Intl.DateTimeFormat('en-GB', { timeZone: tz, timeZoneName: 'short' })
-        .formatToParts(d).filter(function (p) { return p.type === 'timeZoneName'; })[0]) || {}).value || '';
-      el.textContent = time + ' ' + zone;
-    });
-  }
-  clocks(); setInterval(clocks, 20000);
-
   // ---------- boot ----------
   fetch('/assets/world-dots.json').then(function (r) { return r.json(); }).then(function (m) {
     var bits = new Uint8Array(m.rows * m.cols);
